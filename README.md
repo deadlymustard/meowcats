@@ -1,6 +1,8 @@
 # Meowcats
 HTML5 Remake of Meowmania (https://meowmania.jqln.org/)
 
+This was thrown together in an afternoon and also happens to be my first React project. The code in this repository is terrible.
+
 ## Serving up locally
 1. `npm install -g serve`
 2. `serve`
