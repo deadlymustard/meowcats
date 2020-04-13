@@ -1,10 +1,11 @@
 'use strict';
 
 const e = React.createElement;
-const CAT_LIMIT = 6;
-const MEOW_LIMIT = 4;
+const CAT_LIMIT = 11;
+const MEOW_LIMIT = 5;
 const CAT_SCALING_FACTOR = (3/10);
 const MAX_CAT_SIZE = 200;
+let zIndex = 0;
 
 class Cat {
     style;
@@ -28,6 +29,7 @@ class Cat {
     generateCatSyle(x, y, width) {
         return {
             position: 'absolute',
+            'z-index': `${zIndex++}`,
             top: `${y - Math.floor(width/2)}px`,
             left: `${x- Math.floor(width/2)}px`,
             transform: `rotate(${this.getRandomTiltValue()}deg)`,
@@ -77,13 +79,13 @@ class CatWall extends React.Component {
 
     createCat = () => {
         this.addCat(this.state.x, this.state.y);
-        new Audio(`../assets/audio/meow0${this.state.meowIndex}.mp3`).play();
+        new Audio(`../assets/audio/meow0${this.state.meowIndex + 1}.mp3`).play();
     }
     
     addCat(x, y) {
         this.setState(state => {
             const currentCatIndex = (state.catIndex === CAT_LIMIT) ? 0 : state.catIndex;
-            const currentMeowIndex = (state.meowIndex === MEOW_LIMIT) ? 0: state.meowIndex;
+            const currentMeowIndex = (state.meowIndex === MEOW_LIMIT) ? 0 : state.meowIndex;
             let cats = state.cats.slice()
             cats.splice(currentCatIndex, 1, new Cat(x, y, state.windowWidth));
 
@@ -116,5 +118,28 @@ class CatWall extends React.Component {
 }
 
 const domContainer = document.querySelector('#root');
+
+var images = [];
+function preload(imageArr) {
+    for (var i = 0; i < imageArr.length; i++) {
+        images[i] = new Image();
+        images[i].src = imageArr[i];
+    }
+}
+
+//-- usage --//
+preload([
+    "../assets/image/processed/cat01.png",
+    "../assets/image/processed/cat02.png",
+    "../assets/image/processed/cat03.png",
+    "../assets/image/processed/cat04.png",
+    "../assets/image/processed/cat05.png",
+    "../assets/image/processed/cat06.png",
+    "../assets/image/processed/cat07.png",
+    "../assets/image/processed/cat08.png",
+    "../assets/image/processed/cat09.png",
+    "../assets/image/processed/cat010.png",
+    "../assets/image/processed/cat011.png"
+])
 
 ReactDOM.render(e(CatWall), domContainer);
