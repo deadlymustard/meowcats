@@ -46,6 +46,8 @@ class Cat {
 
 class CatWall extends React.Component {
 
+    catAdded = false;
+
     constructor(props) {
         super(props);
 
@@ -83,6 +85,7 @@ class CatWall extends React.Component {
     }
     
     addCat(x, y) {
+        this.catAdded = true;
         this.setState(state => {
             const currentCatIndex = (state.catIndex === CAT_LIMIT) ? 0 : state.catIndex;
             const currentMeowIndex = (state.meowIndex === MEOW_LIMIT) ? 0 : state.meowIndex;
@@ -105,6 +108,11 @@ class CatWall extends React.Component {
                 id="catWall"
                 onClick={() => this.createCat()}
                 onMouseMove={this._onMouseMove.bind(this)}>
+                {!this.catAdded &&
+                    <div id="emptyWall" catAdded={false}>
+                        <span>Tap the screen to play!</span>
+                    </div>
+                }
                 {this.state.cats.map((cat, index) => {
                     return (
                         <div style={cat.style}>
